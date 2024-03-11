@@ -1,0 +1,197 @@
+
+    <!doctype html>
+    <html lang="en"> 
+    <head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Message for you</title> 
+    <!-- <link rel="stylesheet" href="style.css">  -->
+    <style>
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+    
+        .fadeIn {
+          animation: fadeIn 5s ease-out;
+        }
+        *
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: whitesmoke;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.gif {
+    height: 200px;
+    width: 200px;
+}
+.wrapper {
+    display: flex;
+    width: 100%; /* hoặc giá trị cụ thể theo ý muốn */
+    height: 100%;
+    justify-content: center; /* hoặc giá trị cụ thể theo ý muốn */
+    flex-direction: column;
+    align-items: center;
+
+    /* Các thuộc tính khác theo nhu cầu của bạn */
+  }
+
+h2 {
+    text-align: center;
+    font-size: 1.5em;
+    color: #e94d58;
+    margin: 15px 0;
+}
+.btn-group {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+button {
+    position: absolute;
+    width: 150px;
+    height: inherit;
+    color: white;
+    font-size: 1.2em;
+    border-radius: 30px;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px gray;
+    border: 2px solid #e94d58;
+    font-size: 1.2em;
+}
+button:nth-child(1) {
+    margin-left: -200px;
+    background: #e94d58;
+}
+button:nth-child(2) {
+    margin-right: -200px;
+    background: white;
+    color: #e94d58;
+}
+
+.heart-container {
+    position: relative;
+    animation: heartAnimation 2s ease-in-out;
+}
+
+.heart-img {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+}
+
+@keyframes heartAnimation {
+    0% {
+        opacity: 0;
+        transform: scale(0.1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+#backgroundVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
+
+    
+        /* Add other styles as needed */
+      </style>
+    </head> 
+    <body> 
+        
+    <div class="wrapper"> 
+        <h2 class="question">Em thích anh không?</h2> 
+        <img class="gif" id="gifImage" alt="gif" src="https://raw.githubusercontent.com/DzarelDeveloper/Img/main/gifyou.webp"> 
+        <div class="heart"></div>
+        <div class="btn-group"> <button class="yes-btn" onclick="showImage()">Yes</button> <button class="no-btn">No</button> </div> 
+    </div> 
+    <!-- <script src="script.js"></script>  -->
+    </body>
+    <script>
+        function showImage() {
+          var gifImage = document.getElementById("gifImage");
+          gifImage.classList.add("fadeIn");
+        }
+        const wrapper = document.querySelector(".wrapper");
+const question = document.querySelector(".question");
+const gif = document.querySelector(".gif");
+const yesBtn = document.querySelector(".yes-btn");
+const noBtn = document.querySelector(".no-btn");
+var gifImage = document.getElementById("gif");
+let mouseOverCount = 0;
+// Lưu vị trí ban đầu của nút "no" khi trang web được tải
+let initialNoBtnPosition = {
+  left: noBtn.style.left || getComputedStyle(noBtn).left,
+  top: noBtn.style.top || getComputedStyle(noBtn).top,
+};
+
+console.log(gifImage);
+
+yesBtn.addEventListener("click", () => {
+  question.innerHTML = "Aaaaa, anh cũng thích em <3 <3";
+  gif.src = "thu.jpg";
+  gifImage.classList.add("fadeIn");
+  // Đặt vị trí của nút "yes" bằng vị trí ban đầu của nút "no"
+  yesBtn.style.left = initialNoBtnPosition.left;
+  yesBtn.style.top = initialNoBtnPosition.top;
+});
+
+noBtn.addEventListener("mouseover", () => {
+  const noBtnRect = noBtn.getBoundingClientRect();
+  initialNoBtnPosition = {
+    left: noBtn.style.left || getComputedStyle(noBtn).left,
+    top: noBtn.style.top || getComputedStyle(noBtn).top,
+  };
+  mouseOverCount++;
+  if(mouseOverCount == 1){
+    yesBtn.style.left = (parseInt(initialNoBtnPosition.left) + 150) + "px";
+    yesBtn.style.top = noBtn.style.top;
+  }else{
+    yesBtn.style.left = (parseInt(noBtn.style.left) + noBtnRect.width + 40) + "px";
+    yesBtn.style.top = noBtn.style.top;
+  }
+  
+  const maxX = window.innerWidth - noBtnRect.width;
+  const maxY = window.innerHeight - noBtnRect.height;
+  var randomX = Math.floor(Math.random() * maxX);
+  var randomY = Math.floor(Math.random() * maxY);
+  while((randomX - (parseInt(noBtn.style.left) + noBtnRect.width + 40)) < 190 && (randomX - (parseInt(noBtn.style.left) + noBtnRect.width + 40))> 0){
+    console.log((randomX - (parseInt(noBtn.style.left) + noBtnRect.width + 40)))
+    randomX = Math.floor(Math.random() * maxX);
+    randomY = Math.floor(Math.random() * maxY);
+  }
+  noBtn.style.left = randomX + "px";
+  noBtn.style.top = randomY + "px";
+  
+  question.innerHTML = "Noooo, Nhấn không được đâu đừng có cố, Nhấn vào yes đi này";
+});
+
+      </script>
+    </html>
